@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+
+
+import argparse
+import json
+import usb.core
+
+VENDOR = 0x1e71
+PRODUCT = 0x170e
+
+from color_change import KrakenX52
+
+def _color(arg):
+    try:
+        result = tuple(int(c) for c in arg.split(','))
+        if len(result) != 3:
+            raise ValueError
+    except ValueError:
+        raise argparse.ArgumentTypeError("colors must be in r,g,b format")
+    else:
+        return result
+
+def _color_mode(arg):
+    if arg.lower() == 'solid':
+        return KrakenX52.MODE_SOLID
+    if arg.lower() == 'solidall':
+        return KrakenX52.MODE_SOLID_ALL
+    if arg.lower() == 'breathing':
+        return KrakenX52.MODE_BREATHING
+    if arg.lower() == 'pulse':
+        return KrakenX52.MODE_PULSE
+    if arg.lower() == 'fading':
+        return KrakenX52.MODE_FADING
+    if arg.lower() == 'coveringmarquee':
+        return KrakenX52.MODE_COVERING_MARQUEE
+    if arg.lower() == 'spectrumwave':
+        return KrakenX52.MODE_SPECTRUM_WAVE
+    
+    raise argparse.ArgumentTypeError("color mode must be Solid, SolidAll, Breathing, "
+                                      "Pulse, Fading, CoveringMarquee, SpectrumWave")
+
+
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-m', '--mode', dest='mode',
+                        type=_color_mode, default=KrakenX52.MODE_SOLID,
+                        help="Color mode: Solid, SolidAll, Breathing, Pulse,"
+                        "Fading, CoveringMarquee, SpectrumWave")
+
+    parser.add_argument('-c', '--text_color', dest='text_color', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-c0', '--color0', dest='color0', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-c1', '--color1', dest='color1', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-c2', '--color2', dest='color2', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-c3', '--color3', dest='color3', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-c4', '--color4', dest='color4', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-c5', '--color5', dest='color5', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-c6', '--color6', dest='color6', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-c7', '--color7', dest='color7', type=_color,
+                        default=(255, 0, 0), help="Color in r,g,b format")
+
+    parser.add_argument('-cc', '--color_count', dest='color_count', type=int)
+
+    parser.add_argument('-as', '--animation_speed', dest='aspeed', type=int, default=0,
+                        help="Speed between 30 and 100")
+   
+    parser.add_argument('-fs', '--fan_speed', dest='fspeed', type=int, default=30,
+                        help="Speed between 25 and 100")
+
+    parser.add_argument('-ps', '--pump_speed', dest='pspeed', type=int, default=60,
+                        help="Speed between 60 and 100")
+
+
+    args = parser.parse_args()
+    varg = vars(args)
+
+    devices = list(usb.core.find(idVendor=VENDOR, idProduct=PRODUCT, find_all=True))
+    dev = devices[0]
+
+
+    if dev.is_kernel_driver_active(0):
+       dev.detach_kernel_driver(0)
+
+    dev.set_configuration()
+
+    cooler = KrakenX52(dev, **varg)
+    
+    cooler.update()
+
+if __name__ == '__main__':
+    main()
