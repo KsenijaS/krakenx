@@ -11,7 +11,7 @@ There are 8 separate LEDs on the rim, and text color is controlled separately to
 Solid, SolidAll, Breathing, Pulse, Fading, CoveringMarquee, SpectrumWave which are controled via command line flag --mode.
 Control lights using --mode, --animation_speed, --color_count, --color0, --color1, ... --color7, as well as --text_color.
 
- Example:
+- Example:
  sudo python3 colctl --mode solidall --color0 50,0,90 --color1 56,98,0 --color2 20,20,20 --color3 0,90,90 --color_count 4
  
 Pump speed and fan speed are controled via --pump_speed and --fan_speed modes, but I could not verify that the flag works
