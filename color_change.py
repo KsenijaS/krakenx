@@ -125,30 +125,3 @@ class KrakenX52:
     self._send_color()
     self._send_fan_speed()
     self._send_pump_speed()
-
-#devices = list(usb.core.find(idVendor=VENDOR, idProduct=PRODUCT, find_all=True))
-#dev = devices[0]
-#
-#print(dev)
-#
-#
-#if dev.is_kernel_driver_active(0):
-#    dev.detach_kernel_driver(0)
-#  
-#dev.set_configuration()
-#  
-#colors = KrakenX52(
-#      mode=KrakenX52.MODE_COVERING_MARQUEE,
-#      text_color=(10, 10, 90),
-#      color0=(90, 10, 90),
-#      color1=(10, 10, 90),
-#      color2=(90, 10, 10),
-#      color3=(0, 10, 10),
-#      color4=(90, 10, 10),
-#      color5=(90, 255, 10),
-#      color6=(20, 90, 255),
-#      color7=(90, 10, 10),
-#      color_count = 8)
-#
-#colors.update()
-#print(dev.read(0x81, 64))
