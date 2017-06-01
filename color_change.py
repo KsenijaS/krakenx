@@ -89,11 +89,11 @@ class KrakenX52:
 
   def _send_color(self):
     if self._mode==self.MODE_SOLID:
-      color = self._text_color
+      color = self._colors[0]
       self.dev.write(0x01, KrakenX52._flatten(
         [0x02, 0x4c],
         self._mode_bytes(),
-        self._grb_color(self._text_color),
+        self._grb_color(self._colors[0]),
         *itertools.repeat(color, 8)))
     elif self._mode==self.MODE_SOLID_ALL:
       self.dev.write(0x01, KrakenX52._flatten(
