@@ -2,6 +2,7 @@
 
 
 import argparse
+import json
 import usb.core
 
 VENDOR = 0x1e71
