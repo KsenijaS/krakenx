@@ -75,7 +75,7 @@ def main():
     parser.add_argument('-c7', '--color7', dest='color7', type=_color,
                         default=(255, 0, 0), help="Color in r,g,b format")
 
-    parser.add_argument('-cc', '--color_count', dest='color_count', type=int)
+    parser.add_argument('-cc', '--color_count', dest='color_count', type=int, default=1)
 
     parser.add_argument('-as', '--animation_speed', dest='aspeed', type=int, default=0,
                         help="Speed between 30 and 100")
