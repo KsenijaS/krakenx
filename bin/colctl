@@ -78,7 +78,7 @@ def main():
     parser.add_argument('-cc', '--color_count', dest='color_count', type=int, default=1)
 
     parser.add_argument('-as', '--animation_speed', dest='aspeed', type=int, default=0,
-                        help="Speed between 30 and 100")
+                        help="Speed between 0 and 4")
    
     parser.add_argument('-fs', '--fan_speed', dest='fspeed', type=int, default=30,
                         help="Speed between 25 and 100")
