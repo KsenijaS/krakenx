@@ -1,6 +1,6 @@
-#Reverse engineered protocol of the NZXT Kraken X52
+# Reverse engineered protocol of the NZXT Kraken X52
 
-##Message
+## Message
 
 **Messages sent by the host**
 
