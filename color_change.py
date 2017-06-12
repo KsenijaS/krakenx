@@ -75,7 +75,7 @@ class KrakenX52:
     self._pspeed = kwargs.pop('pspeed', 60)
 
   def _mode_bytes(self, i=0):
-    # set the higher 4 bits of the 3rd byte to denote the number of colors being set
+    # set the higher 3 bits of the 2rd byte to denote the number of colors being set
     return (self._mode.mode[0], self._mode.mode[1] + 16 * (i) * 2)
   
   def _mode_speed(self):
