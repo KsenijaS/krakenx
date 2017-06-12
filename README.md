@@ -4,7 +4,11 @@ Python script to control NZXT cooler KrakenX52 in Linux
 ## Supported devices:
 
 - NZXT Kraken X52
- 
+
+## Installation:
+
+sudo python3 -m pip install kraken
+
 ## Usage:
 
 There are 8 separate LEDs on the rim, and text color is controlled separately too. There are 7 different color modes:
