@@ -4,8 +4,8 @@
 
 **Messages sent by the host**
 
-The 1st byte of the message is always 0x02
-The 2nd and 3rd byte of the message represents the message type:
+The 1st byte of the message is always 0x02. The 2nd and 3rd byte of the
+message represents the message type:
 
 | Type     |   Description   |
 |----------|-----------------|
@@ -33,6 +33,7 @@ The 2nd and 3rd byte of the message represents the message type:
 
 Text color represents led in the middle that controls lighting of letters NZXT,
 Color 0-7 are leds on the rim. Each of these leds can be controled separately.
+
 Note: Text color is written in grb format (except in Spectrum Wave mode),
 whereas colors 0-7 have rgb format.
 
