@@ -1,8 +1,9 @@
 from setuptools import setup
 
 setup(
-    name='kraken',
-    packages=['kraken'],
+    name='krakenx',
+    version='0.0.1',
+    packages=['krakenx'],
     scripts=['bin/colctl'],
     install_requires=['pyusb'],
 )

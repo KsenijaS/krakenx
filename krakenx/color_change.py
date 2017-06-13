@@ -35,29 +35,29 @@ class KrakenX52:
   @classmethod
   def _grb_color(cls, color):
     return (color[1], color[0], color[2])
-  
+
   def _validate(self):
     if self._mode not in self.COLOR_MODES:
       raise ValueError("color mode must be one of {}".format(self.COLOR_MODES))
-    
+
     if self._aspeed < 0 or self._aspeed > 4 or not isinstance(self._aspeed, int):
       raise ValueError("Animation speed must be integer number between 0 and 4")
 
     if self._fspeed < 25 or self._fspeed > 100 or not isinstance(self._fspeed, int):
       raise ValueError("Fan speed must be integer number between 25 and 100")
-    
+
     if self._pspeed < 60 or self._pspeed > 100 or not isinstance(self._pspeed, int):
       raise ValueError("Pump speed must be integer number between 60 and 100")
-    
+
     self._check_color(self._text_color)
-    
+
     for j in range(self._color_count):
       self._check_color(self._colors[j])
 
 
   def __init__(self, dev, **kwargs):
     self.dev = dev
-    
+
     self._mode = kwargs.pop('mode', self.MODE_SOLID)
 
     self._text_color = kwargs.pop('text_color', self.DEFAULT_COLOR)
@@ -67,9 +67,9 @@ class KrakenX52:
       self._colors.insert(i, kwargs.pop('color' + str(i), self.DEFAULT_COLOR))
 
     self._color_count = kwargs.pop('color_count', 1)
-    
+
     self._aspeed = kwargs.pop('aspeed', 0)
-    
+
     self._fspeed = kwargs.pop('fspeed', 30)
 
     self._pspeed = kwargs.pop('pspeed', 60)
@@ -77,7 +77,7 @@ class KrakenX52:
   def _mode_bytes(self, i=0):
     # set the higher 3 bits of the 2rd byte to denote the number of colors being set
     return (self._mode.mode[0], self._mode.mode[1] + 16 * (i) * 2)
-  
+
   def _mode_speed(self):
     return (self._mode.mode[0], self._aspeed)
 
@@ -119,7 +119,7 @@ class KrakenX52:
 		  *itertools.repeat(self._colors[i], 8)))
     else:
       raise Exception("!")
-  
+
   def update(self):
     self._validate()
     self._send_color()
