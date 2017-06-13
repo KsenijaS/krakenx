@@ -8,7 +8,7 @@ import usb.core
 VENDOR = 0x1e71
 PRODUCT = 0x170e
 
-from color_change import KrakenX52
+from krakenx.color_change import KrakenX52
 
 def _color(arg):
     try:
