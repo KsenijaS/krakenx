@@ -24,21 +24,25 @@ Control lights using --mode, --animation_speed, --color_count, --color0,
 Depending on mode, different flags are used:
 
 **Solid**
+
 Only use flag color0, if not set it will have default color(red), example:
 sudo colctl --mode solid --color0 50,0,90
 
 **Solid All**
+
 Use flags text color and color 0-7, colors that are not set will have default
 color (red), example: sudo colctl --mode solidall -text_color 0,255,0 -c0
 50,0,90 -c1 40,50,60
 
 **Breathing, Pulse, Fading, Covering Marquee**
+
 Set flags color0-7 and color_count. Flag color_count needs only to be set when
 there is more than one color flag and it represents number of colors being
 used, example: sudo colctl --mode fading --color0 50,0,90 --color1 56,98,0
 --color2 20,20,20 --color3 0,90,90 --color_count 4
 
 **Spectrum Wave**
+
 Only use flag animation_speed, if flag is not set it will have default value
 (0). Example: sudo colctl --mode spectrumwave --animation_speed 3
 
