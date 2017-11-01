@@ -1,9 +1,9 @@
 # NZXT-cooler
-Python script to control NZXT cooler KrakenX52 in Linux
+Python script to control NZXT cooler KrakenX52/X62 in Linux
 
 ## Supported devices:
 
-- NZXT Kraken X52 (Vendor/Product ID: 0x1e71:0x170e)
+- NZXT Kraken X52/X62 (Vendor/Product ID: 0x1e71:0x170e)
 
 Note: It's possible that other devices are supported as well
 
