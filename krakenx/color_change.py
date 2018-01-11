@@ -120,19 +120,23 @@ class KrakenX52:
     else:
       raise Exception("!")
 
+  def print_status(self):
+    print ("Device status:")
+    for k,v in sorted(self._receive_status().items()):
+      print(k,v)
+
   def _receive_status(self):
-    status = self.dev.read(0x81, 64)
-    print('status', status)
-    liquid_temperature = status[1] + status[2]/10
-    print('liquid temperature: ' + str(liquid_temperature))
-    fs = status[3] << 8 | status[4]
-    ps = status[5] << 8 | status[6]
-    print('fan speed', fs)
-    print('pump speed', ps)
+    raw_status = self.dev.read(0x81, 64)
+    liquid_temperature = raw_status[1] + raw_status[2]/10
+    fan_speed = raw_status[3] << 8 | raw_status[4]
+    pump_speed = raw_status[5] << 8 | raw_status[6]
+    return {'fan_speed': fan_speed,
+            'pump_speed': pump_speed,
+            'liquid_temperature': liquid_temperature}
 
   def update(self):
     self._validate()
     self._send_color()
     self._send_fan_speed()
     self._send_pump_speed()
-    self._receive_status()
+    return self._receive_status()
