@@ -85,6 +85,7 @@ def main():
 
     parser.add_argument('-ps', '--pump_speed', dest='pspeed', type=int, default=60,
                         help="Speed between 60 and 100")
+    parser.add_argument('-s', '--status', action='store_true', help="Print pump status, does not update if set.")
 
 
     args = parser.parse_args()
@@ -101,7 +102,10 @@ def main():
 
     cooler = KrakenX52(dev, **varg)
     
-    cooler.update()
+    if args.status:
+      cooler.print_status()
+    else:
+      cooler.update()
 
 if __name__ == '__main__':
     main()
