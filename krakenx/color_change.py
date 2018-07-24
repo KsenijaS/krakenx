@@ -139,9 +139,11 @@ class KrakenX52:
     liquid_temperature = raw_status[1] + raw_status[2]/10
     fan_speed = raw_status[3] << 8 | raw_status[4]
     pump_speed = raw_status[5] << 8 | raw_status[6]
+    firmware_version = '{}.{}.{}'.format(raw_status[0xb], raw_status[0xc] << 8 | raw_status[0xd], raw_status[0xe])
     return {'fan_speed': fan_speed,
             'pump_speed': pump_speed,
-            'liquid_temperature': liquid_temperature}
+            'liquid_temperature': liquid_temperature,
+            'firmware_version' : firmware_version}
 
   def update(self):
     self._validate()
