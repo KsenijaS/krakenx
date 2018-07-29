@@ -1,5 +1,5 @@
 # NZXT-cooler
-Python script to control NZXT cooler KrakenX52/X62 in Linux
+Python script to control NZXT cooler KrakenX52/X62 in Linux and Windows.
 
 ## Supported devices:
 
@@ -7,9 +7,17 @@ Python script to control NZXT cooler KrakenX52/X62 in Linux
 
 Note: It's possible that other devices are supported as well
 
-## Installation:
+## Linux installation:
 
 sudo python3 -m pip install krakenx
+
+## Windows installation
+
+Install libusb or libusbK device driver for the NZXT USB device. [Zadig](http://zadig.akeo.ie/) is a tool to accomplish this. Select "Options -> List All Devices", select your NZXT device, change target driver to libusb-win32 or libusbK and install the driver. CAM software will not detect the device after this. See [libwdi FAQ](https://github.com/pbatard/libwdi/wiki/FAQ#Help_Zadig_replaced_the_driver_for_the_wrong_device_How_do_I_restore_it) for uninstallation instructions.
+
+Now krakenx can be installed using PIP:
+
+pip install krankenx
 
 ## Usage:
 
