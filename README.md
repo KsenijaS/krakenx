@@ -56,7 +56,7 @@ colctl --mode fading --color0 50,0,90 --color1 56,98,0
 **Police, Spinner**
 
 Set flags color0-1 and color count. Text color is always black. Example:
-colctl --mode spinner --color0 9,33,71 --color1 2,7,15 --color_count 4 --animation_speed 2
+colctl --mode spinner --color0 9,33,71 --color1 2,7,15 --color_count 2 --animation_speed 2
 
 **Chaser**
 
