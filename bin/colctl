@@ -36,16 +36,16 @@ def _color_mode(arg):
         return KrakenX52.MODE_COVERING_MARQUEE
     if arg.lower() == 'spectrumwave':
         return KrakenX52.MODE_SPECTRUM_WAVE
-    if arg.lower() == 'police':
-        return KrakenX52.MODE_POLICE
-    if arg.lower() == 'spinner':
-        return KrakenX52.MODE_SPINNER
-    if arg.lower() == 'chaser':
-        return KrakenX52.MODE_CHASER
+    if arg.lower() == 'alternating':
+        return KrakenX52.MODE_ALTERNATING
+    if arg.lower() == 'taichi':
+        return KrakenX52.MODE_TAICHI
+    if arg.lower() == 'watercooler':
+        return KrakenX52.MODE_WATERCOOLER
     
     raise argparse.ArgumentTypeError("color mode must be Solid, SolidAll, Breathing, "
                                       "Pulse, Fading, CoveringMarquee, SpectrumWave, "
-                                      "Police, Spinner, Chaser")
+                                      "Alternating, TaiChi, WaterCooler")
 
 
 def main():
@@ -54,7 +54,7 @@ def main():
     parser.add_argument('-m', '--mode', dest='mode',
                         type=_color_mode, default=KrakenX52.MODE_SOLID,
                         help="Color mode: Solid, SolidAll, Breathing, Pulse,"
-                        "Fading, CoveringMarquee, SpectrumWave, Police, Spinner, Chaser")
+                        "Fading, CoveringMarquee, SpectrumWave, Alternating, TaiChi, WaterCooler")
 
     parser.add_argument('-c', '--text_color', dest='text_color', type=_color,
                         default=(255, 0, 0), help="Color in r,g,b format")
