@@ -23,7 +23,7 @@ class KrakenX52:
   MODE_SPINNER = Mode('Spinner', (8, 2))
   MODE_CHASER = Mode('Chaser', (9, 2))
   COLOR_MODES = [MODE_SOLID, MODE_SOLID_ALL, MODE_BREATHING, MODE_PULSE,
-		 MODE_FADING, MODE_COVERING_MARQUEE, MODE_SPECTRUM_WAVE,
+     MODE_FADING, MODE_COVERING_MARQUEE, MODE_SPECTRUM_WAVE,
                  MODE_POLICE, MODE_SPINNER, MODE_CHASER]
 
   @classmethod
@@ -101,15 +101,15 @@ class KrakenX52:
         *itertools.repeat(color, 8)))
     elif self._mode==self.MODE_SOLID_ALL:
       self.dev.write(0x01, KrakenX52._flatten(
-		[0x02, 0x4c, 0x00],
-		self._mode_bytes(),
-		self._grb_color(self._text_color),
-		*self._colors))
+    [0x02, 0x4c, 0x00],
+    self._mode_bytes(),
+    self._grb_color(self._text_color),
+    *self._colors))
     elif self._mode==self.MODE_SPECTRUM_WAVE:
       self.dev.write(0x01, KrakenX52._flatten(
-		[0x02, 0x4c, 0x00],
-		self._mode_speed(),
-		*itertools.repeat(self.DEFAULT_COLOR, 9)))
+    [0x02, 0x4c, 0x00],
+    self._mode_speed(),
+    *itertools.repeat(self.DEFAULT_COLOR, 9)))
     elif self._mode in [
       self.MODE_FADING,
       self.MODE_COVERING_MARQUEE,
@@ -120,10 +120,10 @@ class KrakenX52:
       self.MODE_CHASER]:
       for i in range(self._color_count):
         self.dev.write(0x01, KrakenX52._flatten(
-		  [0x02, 0x4c, 0x00],
-		  self._mode_bytes(i),
-                  self._grb_color(self._text_color if self._text_color is not None else self._colors[i]),
-		  *itertools.repeat(self._colors[i], 8))) #self._color_count)))
+      [0x02, 0x4c, 0x00],
+      self._mode_bytes(i),
+      self._grb_color(self._text_color if self._text_color is not None else self._colors[i]),
+      *itertools.repeat(self._colors[i], 8))) #self._color_count)))
     else:
       raise Exception("!")
 
