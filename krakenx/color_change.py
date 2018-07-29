@@ -19,12 +19,12 @@ class KrakenX52:
   MODE_FADING = Mode('Fading', (4, 2))
   MODE_COVERING_MARQUEE = Mode('CoveringMarquee', (4, 2))
   MODE_SPECTRUM_WAVE = Mode('SpectrumWave', (2, 1))
-  MODE_ALTERNATING = Mode('Alternating', (5, 2))
-  MODE_TAICHI = Mode('TaiChi', (8, 2))
-  MODE_WATERCOOLER = Mode('WaterCooler', (9, 2))
+  MODE_POLICE = Mode('Police', (5, 2))
+  MODE_SPINNER = Mode('Spinner', (8, 2))
+  MODE_CHASER = Mode('Chaser', (9, 2))
   COLOR_MODES = [MODE_SOLID, MODE_SOLID_ALL, MODE_BREATHING, MODE_PULSE,
      MODE_FADING, MODE_COVERING_MARQUEE, MODE_SPECTRUM_WAVE,
-                 MODE_ALTERNATING, MODE_TAICHI, MODE_WATERCOOLER]
+                 MODE_POLICE, MODE_SPINNER, MODE_CHASER]
 
   @classmethod
   def _check_color(cls, color):
@@ -115,9 +115,9 @@ class KrakenX52:
       self.MODE_COVERING_MARQUEE,
       self.MODE_PULSE,
       self.MODE_BREATHING,
-      self.MODE_ALTERNATING,
-      self.MODE_TAICHI,
-      self.MODE_WATERCOOLER]:
+      self.MODE_POLICE,
+      self.MODE_SPINNER,
+      self.MODE_CHASER]:
       for i in range(self._color_count):
         self.dev.write(0x01, KrakenX52._flatten(
       [0x02, 0x4c, 0x00],
