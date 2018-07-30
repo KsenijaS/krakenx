@@ -61,7 +61,7 @@ colctl --mode marquee --color0 9,33,71 --color1 2,7,15 --color_count 2 --animati
 
 **Chaser**
 
-Color flags are ignored.
+Color flags are ignored. Called "Tai Chi" in CAM software.
 
 **Spectrum Wave**
 
