@@ -41,7 +41,7 @@ colctl --mode solid --color0 50,0,90
 **Solid All**
 
 Use flags text_color and color0-7, colors that are not set will have default
-color (red), example: sudo colctl --mode solidall -text_color 0,255,0 -c0
+color (red), example: sudo colctl --mode solidall --text_color 0,255,0 -c0
 50,0,90 -c1 40,50,60
 
 **Breathing, Pulse, Fading, Covering Marquee**
