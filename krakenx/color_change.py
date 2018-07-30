@@ -14,17 +14,18 @@ class KrakenX52:
   Mode = namedtuple('Mode', ['name','mode'])
   MODE_SOLID = Mode('Solid', (0, 2))
   MODE_SOLID_ALL = Mode('SolidAll', (0, 2))
+  MODE_FADING = Mode('Fading', (1, 2))
+  MODE_SPECTRUM_WAVE = Mode('SpectrumWave', (2, 1))
+  MODE_MARQUEE = Mode('Marquee', (3, 2))
+  MODE_COVERING_MARQUEE = Mode('CoveringMarquee', (4, 2))
+  MODE_POLICE = Mode('Police', (5, 2))
   MODE_BREATHING = Mode('Breathing', (6, 2))
   MODE_PULSE = Mode('Pulse', (7, 2))
-  MODE_FADING = Mode('Fading', (4, 2))
-  MODE_COVERING_MARQUEE = Mode('CoveringMarquee', (4, 2))
-  MODE_SPECTRUM_WAVE = Mode('SpectrumWave', (2, 1))
-  MODE_POLICE = Mode('Police', (5, 2))
   MODE_SPINNER = Mode('Spinner', (8, 2))
   MODE_CHASER = Mode('Chaser', (9, 2))
   COLOR_MODES = [MODE_SOLID, MODE_SOLID_ALL, MODE_BREATHING, MODE_PULSE,
      MODE_FADING, MODE_COVERING_MARQUEE, MODE_SPECTRUM_WAVE,
-                 MODE_POLICE, MODE_SPINNER, MODE_CHASER]
+                 MODE_POLICE, MODE_SPINNER, MODE_CHASER, MODE_MARQUEE]
 
   @classmethod
   def _check_color(cls, color):
@@ -112,6 +113,7 @@ class KrakenX52:
         *itertools.repeat(self.DEFAULT_COLOR, 9)))
     elif self._mode in [
       self.MODE_FADING,
+      self.MODE_MARQUEE,
       self.MODE_COVERING_MARQUEE,
       self.MODE_PULSE,
       self.MODE_BREATHING,
@@ -123,7 +125,7 @@ class KrakenX52:
           [0x02, 0x4c, 0x00],
           self._mode_bytes(i),
           self._grb_color(self._text_color if self._text_color is not None else self._colors[i]),
-          *itertools.repeat(self._colors[i], 8))) #self._color_count)))
+          *itertools.repeat(self._colors[i], 8)))
     else:
       raise Exception("!")
 
