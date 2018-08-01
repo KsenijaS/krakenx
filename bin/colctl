@@ -55,7 +55,7 @@ def main():
 
     parser.add_argument('-m', '--mode', dest='mode',
                         type=_color_mode, default=KrakenX52.MODE_SOLID,
-                        help="Color mode: Solid, SolidAll, Breathing, Pulse,"
+                        help="Color mode: Solid, SolidAll, Breathing, Pulse, "
                         "Fading, Marquee, CoveringMarquee, SpectrumWave, Police, Spinner, Chaser")
 
     parser.add_argument('-c', '--text_color', dest='text_color', type=_color,
