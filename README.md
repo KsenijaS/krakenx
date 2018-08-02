@@ -9,7 +9,7 @@ Note: It's possible that other devices are supported as well
 
 ## Linux installation:
 
-sudo python3 -m pip install krakenx
+`sudo python3 -m pip install krakenx`
 
 ## Windows installation
 
@@ -17,11 +17,13 @@ Install libusb or libusbK device driver for the NZXT USB device. [Zadig](http://
 
 Now krakenx can be installed using PIP:
 
-pip install krankenx
+`pip install krankenx`
+
+`colctl` works with user privileges or add PYTHONPATH variables to system environment (only available in user environment by default)
 
 ## Usage:
 
-Use sudo on Linux.
+Use `sudo` on Linux.
 
 There are 8 separate LEDs on the rim, and text color is controlled separately
 too. There are 7 different color modes: Solid, SolidAll, Breathing, Pulse,
@@ -35,29 +37,28 @@ Depending on mode, different flags are used:
 
 **Solid**
 
-Only use flag color0, if not set it will have default color(red), example:
-colctl --mode solid --color0 50,0,90
+Only use flag color0, if not set it will have default color(red), example:  
+`colctl --mode solid --color0 50,0,90`
 
 **Solid All**
 
 Use flags text_color and color0-7, colors that are not set will have default
-color (red), example: sudo colctl --mode solidall --text_color 0,255,0 -c0
-50,0,90 -c1 40,50,60
+color (red), example:  
+`colctl --mode solidall --text_color 0,255,0 -c0 50,0,90 -c1 40,50,60`
 
 **Breathing, Pulse, Fading, Covering Marquee**
 
 Set flags text_color, animation_speed, color0-7 and color_count. If text_color
 is not set, the current animation color will be used as text color.
 Flag color_count needs only to be set when there is more than one color flag
-and it represents number of colors being used, example: 
-colctl --mode fading --color0 50,0,90 --color1 56,98,0
---color2 20,20,20 --color3 0,90,90 --color_count 4
+and it represents number of colors being used, example:  
+`colctl --mode fading --color0 50,0,90 --color1 56,98,0 --color2 20,20,20 --color3 0,90,90 --color_count 4`
 
 **Marquee, Police, Spinner**
 
-Set flags color0-1 and color count. Text color is always black. Examples:
-colctl --mode spinner --color0 9,33,71 --color1 2,7,15 --color_count 2 --animation_speed 2
-colctl --mode marquee --color0 9,33,71 --color1 2,7,15 --color_count 2 --animation_speed 0
+Set flags color0-1 and color count. Text color is always black. Examples:  
+`colctl --mode spinner --color0 9,33,71 --color1 2,7,15 --color_count 2 --animation_speed 2`  
+`colctl --mode marquee --color0 9,33,71 --color1 2,7,15 --color_count 2 --animation_speed 0`
 
 **Chaser**
 
@@ -66,14 +67,14 @@ Color flags are ignored. Called "Tai Chi" in CAM software.
 **Spectrum Wave**
 
 Only use flag animation speed, if flag is not set it will have default value
-(0). Example: colctl --mode spectrumwave --animation_speed 3
+(0). Example: `colctl --mode spectrumwave --animation_speed 3`
 
 Pump speed and fan speed are controled via --pump_speed and --fan_speed modes,
 but I could not verify that the flag works because I can't read fan and pump
 speed on my AMD B350 motherboard. If flags are not set, pump speed will have
 default value of 60% and fan speed 30%. 
 
-See also colctl --help
+See also `colctl --help`
 
 Note: Solid and Solid All mode settings are not remembered after restart, I
 think that is due to the firmware bug.
