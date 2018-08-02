@@ -19,7 +19,7 @@ Now krakenx can be installed using PIP:
 
 `pip install krankenx`
 
-`colctl` works with user privileges or add PYTHONPATH variables to system environment (only available in user environment by default)
+`colctl` works with user privileges or add `PYTHONPATH` variables to system environment (only available in user environment by default).
 
 ## Usage:
 
@@ -28,10 +28,10 @@ Use `sudo` on Linux.
 There are 8 separate LEDs on the rim, and text color is controlled separately
 too. There are 7 different color modes: Solid, SolidAll, Breathing, Pulse,
 Fading, CoveringMarquee, SpectrumWave which are controled via command line flag
---mode.
+`--mode`.
 
-Control lights using --mode, --animation_speed, --color_count, --color0,
---color1, ... --color7, as well as --text_color.
+Control lights using `--mode`, `--animation_speed`, `--color_count`, `--color0`,
+`--color1`, ... `--color7`, as well as `--text_color`.
 
 Depending on mode, different flags are used:
 
@@ -70,7 +70,7 @@ Only use flag animation speed, if flag is not set it will have default value
 (0). Example:  
 `colctl --mode spectrumwave --animation_speed 3`
 
-Pump speed and fan speed are controled via --pump_speed and --fan_speed modes,
+Pump speed and fan speed are controled via `--pump_speed` and `--fan_speed` modes,
 but I could not verify that the flag works because I can't read fan and pump
 speed on my AMD B350 motherboard. If flags are not set, pump speed will have
 default value of 60% and fan speed 30%. 
