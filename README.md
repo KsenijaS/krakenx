@@ -67,7 +67,8 @@ Color flags are ignored. Called "Tai Chi" in CAM software.
 **Spectrum Wave**
 
 Only use flag animation speed, if flag is not set it will have default value
-(0). Example: `colctl --mode spectrumwave --animation_speed 3`
+(0). Example:  
+`colctl --mode spectrumwave --animation_speed 3`
 
 Pump speed and fan speed are controled via --pump_speed and --fan_speed modes,
 but I could not verify that the flag works because I can't read fan and pump
