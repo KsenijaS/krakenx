@@ -15,11 +15,19 @@ Note: It's possible that other devices are supported as well
 
 Install libusb or libusbK device driver for the NZXT USB device. [Zadig](http://zadig.akeo.ie/) is a tool to accomplish this. Select "Options -> List All Devices", select your NZXT device, change target driver to libusb-win32 or libusbK and install the driver. CAM software will not detect the device after this. See [libwdi FAQ](https://github.com/pbatard/libwdi/wiki/FAQ#Help_Zadig_replaced_the_driver_for_the_wrong_device_How_do_I_restore_it) for uninstallation instructions.
 
-Now krakenx can be installed using PIP:
+Now krakenx can be installed using PIP (use Python 3, no adminstrative privileges required):
 
-`pip install krankenx`
+`python -m pip install krankenx`
 
-`colctl` works with user privileges or add `PYTHONPATH` variables to system environment (only available in user environment by default).
+`colctl` works with user privileges. Other accounts may need `PATH` updates for Python main and script folders in system environment (only available in user environment by default).
+
+## Install from source
+
+From source folder execute (use `sudo` on Linux, user account on Windows):  
+`python -m pip install -e .`
+
+To uninstall use:
+`python -m pip uninstall krakenx`
 
 ## Usage:
 
