@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import os
 import usb.core
 
 VENDOR = 0x1e71
@@ -31,13 +32,22 @@ def _color_mode(arg):
         return KrakenX52.MODE_PULSE
     if arg.lower() == 'fading':
         return KrakenX52.MODE_FADING
+    if arg.lower() == 'marquee':
+        return KrakenX52.MODE_MARQUEE
     if arg.lower() == 'coveringmarquee':
         return KrakenX52.MODE_COVERING_MARQUEE
     if arg.lower() == 'spectrumwave':
         return KrakenX52.MODE_SPECTRUM_WAVE
+    if arg.lower() == 'police':
+        return KrakenX52.MODE_POLICE
+    if arg.lower() == 'spinner':
+        return KrakenX52.MODE_SPINNER
+    if arg.lower() == 'chaser':
+        return KrakenX52.MODE_CHASER
 
     raise argparse.ArgumentTypeError("color mode must be Solid, SolidAll, Breathing, "
-                                      "Pulse, Fading, CoveringMarquee, SpectrumWave")
+                                      "Pulse, Fading, Marquee, CoveringMarquee, SpectrumWave, "
+                                      "Police, Spinner, Chaser")
 
 
 def main():
@@ -45,8 +55,8 @@ def main():
 
     parser.add_argument('-m', '--mode', dest='mode',
                         type=_color_mode, default=KrakenX52.MODE_SOLID,
-                        help="Color mode: Solid, SolidAll, Breathing, Pulse,"
-                        "Fading, CoveringMarquee, SpectrumWave")
+                        help="Color mode: Solid, SolidAll, Breathing, Pulse, "
+                        "Fading, Marquee, CoveringMarquee, SpectrumWave, Police, Spinner, Chaser")
 
     parser.add_argument('-c', '--text_color', dest='text_color', type=_color,
                         default=(255, 0, 0), help="Color in r,g,b format")
@@ -79,7 +89,7 @@ def main():
 
     parser.add_argument('-as', '--animation_speed', dest='aspeed', type=int, default=0,
                         help="Speed between 0 and 4")
-
+   
     parser.add_argument('-fs', '--fan_speed', dest='fspeed', type=int, default=30,
                         help="Speed between 25 and 100")
 
@@ -90,22 +100,22 @@ def main():
 
     args = parser.parse_args()
     varg = vars(args)
-
+    
     devices = list(usb.core.find(idVendor=VENDOR, idProduct=PRODUCT, find_all=True))
 
     for d in range(0, len(devices)):
-        dev = devices[d]
-        if dev.is_kernel_driver_active(d):
-           dev.detach_kernel_driver(d)
+      dev = devices[d]
+      if os.name != 'nt' and dev.is_kernel_driver_active(0):
+        dev.detach_kernel_driver(0)
 
-        dev.set_configuration()
+      dev.set_configuration()
 
-        cooler = KrakenX52(dev, **varg)
+      cooler = KrakenX52(dev, **varg)
 
-        if args.status:
-          cooler.print_status()
-        else:
-          cooler.update()
+      if args.status:
+        cooler.print_status()
+      else:
+        cooler.update()
 
 if __name__ == '__main__':
     main()
