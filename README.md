@@ -17,7 +17,7 @@ Install libusb or libusbK device driver for the NZXT USB device. [Zadig](http://
 
 Now krakenx can be installed using PIP (use Python 3, no adminstrative privileges required):
 
-`python -m pip install krankenx`
+`python -m pip install krakenx`
 
 `colctl` works with user privileges. Other accounts may need `PATH` updates for Python main and script folders in system environment (only available in user environment by default).
 
