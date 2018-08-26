@@ -7,6 +7,10 @@ Python script to control NZXT cooler KrakenX52/X62 in Linux and Windows.
 
 Note: It's possible that other devices are supported as well
 
+## Python pip note:
+
+The public Python pip package installed with the pip install command might be outdated. You can check the [pip release history](https://pypi.org/project/krakenx/#history) and [Install from source](#install-from-source) if a newer version is required.
+
 ## Linux installation:
 
 `sudo python3 -m pip install krakenx`
@@ -17,13 +21,15 @@ Install libusb or libusbK device driver for the NZXT USB device. [Zadig](http://
 
 Now krakenx can be installed using PIP (use Python 3, no adminstrative privileges required):
 
-`python -m pip install krankenx`
+`python -m pip install krakenx`
 
 `colctl` works with user privileges. Other accounts may need `PATH` updates for Python main and script folders in system environment (only available in user environment by default).
 
+The `colctl` command might only work in a Unix shell like git bash. Use `colctl.py` in Windows command line environments instead which just redirects your command.
+
 ## Install from source
 
-From source folder execute (use `sudo` on Linux, user account on Windows):  
+From cloned project source folder execute (use `sudo` on Linux, user account on Windows):  
 `python -m pip install -e .`
 
 To uninstall use:
@@ -31,7 +37,7 @@ To uninstall use:
 
 ## Usage:
 
-Use `sudo` on Linux.
+Use `sudo` on Linux. Use `colctl.py` instead of `colctl` in Windows command line environment without Unix support.
 
 There are 8 separate LEDs on the rim, and text color is controlled separately
 too. There are 7 different color modes: Solid, SolidAll, Breathing, Pulse,

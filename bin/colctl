@@ -50,9 +50,7 @@ def _color_mode(arg):
                                       "Police, Spinner, Chaser")
 
 
-def main():
-    parser = argparse.ArgumentParser()
-
+def main(parser):
     parser.add_argument('-m', '--mode', dest='mode',
                         type=_color_mode, default=KrakenX52.MODE_SOLID,
                         help="Color mode: Solid, SolidAll, Breathing, Pulse, "
@@ -118,4 +116,5 @@ def main():
         cooler.update()
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    main(parser)
