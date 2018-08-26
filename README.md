@@ -1,5 +1,5 @@
 # NZXT-cooler
-Python script to control NZXT cooler KrakenX52/X62 in Linux and Windows.
+Python script to control NZXT cooler Kraken X52/X62/X72 in Linux and Windows.
 
 ## Supported devices:
 
