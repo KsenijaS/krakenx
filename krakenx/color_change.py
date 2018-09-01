@@ -34,8 +34,9 @@ class KrakenX52:
         raise ValueError("colors must be tuples of 3 int between 0 and 255")
 
   @classmethod
-  def _flatten(cls, *args):
-    return list(itertools.chain(*args))
+  def _build_msg(cls, *args):
+    payload = list(itertools.chain(*args))
+    return payload + [0]*(65 - len(payload))
 
   @classmethod
   def _grb_color(cls, color):
@@ -87,27 +88,27 @@ class KrakenX52:
     return (self._mode.mode[0], self._aspeed)
 
   def _send_pump_speed(self):
-    self.dev.write(0x01, [0x02, 0x4d, 0x40, 0x00, self._pspeed])
+    self.dev.write(0x01, KrakenX52._build_msg([0x02, 0x4d, 0x40, 0x00, self._pspeed]))
 
   def _send_fan_speed(self):
-    self.dev.write(0x01, [0x02, 0x4d, 0x00, 0x00, self._fspeed])
+    self.dev.write(0x01, KrakenX52._build_msg([0x02, 0x4d, 0x00, 0x00, self._fspeed]))
 
   def _send_color(self):
     if self._mode==self.MODE_SOLID:
       color = self._colors[0]
-      self.dev.write(0x01, KrakenX52._flatten(
+      self.dev.write(0x01, KrakenX52._build_msg(
         [0x02, 0x4c, 0x00],
         self._mode_bytes(),
         self._grb_color(self._colors[0]),
         *itertools.repeat(color, 8)))
     elif self._mode==self.MODE_SOLID_ALL:
-      self.dev.write(0x01, KrakenX52._flatten(
+      self.dev.write(0x01, KrakenX52._build_msg(
         [0x02, 0x4c, 0x00],
         self._mode_bytes(),
         self._grb_color(self._text_color),
         *self._colors))
     elif self._mode==self.MODE_SPECTRUM_WAVE:
-      self.dev.write(0x01, KrakenX52._flatten(
+      self.dev.write(0x01, KrakenX52._build_msg(
         [0x02, 0x4c, 0x00],
         self._mode_speed(),
         *itertools.repeat(self.DEFAULT_COLOR, 9)))
@@ -121,7 +122,7 @@ class KrakenX52:
       self.MODE_SPINNER,
       self.MODE_CHASER]:
       for i in range(self._color_count):
-        self.dev.write(0x01, KrakenX52._flatten(
+        self.dev.write(0x01, KrakenX52._build_msg(
           [0x02, 0x4c, 0x00],
           self._mode_bytes(i),
           self._grb_color(self._text_color if self._text_color is not None else self._colors[i]),
