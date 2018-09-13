@@ -87,12 +87,13 @@ def main(parser):
 
     parser.add_argument('-as', '--animation_speed', dest='aspeed', type=int, default=0,
                         help="Speed between 0 and 4")
-   
-    parser.add_argument('-fs', '--fan_speed', dest='fspeed', type=int, default=30,
-                        help="Speed between 25 and 100")
 
-    parser.add_argument('-ps', '--pump_speed', dest='pspeed', type=int, default=60,
-                        help="Speed between 60 and 100")
+    parser.add_argument('-fs', '--fan_speed', dest='fspeed', default=[(20, 25), (30, 55), (36,75), (40, 85), (50, 100)],
+                        help="Fan speed between 25 and 100; fixed value or comma-separated (temperature,percentage) pairs")
+
+    parser.add_argument('-ps', '--pump_speed', dest='pspeed', default=[(30, 60), (36, 90), (40, 100)],
+                        help="Pump speed between 60 and 100; fixed value or comma-separated (temperature,percentage) pairs")
+
     parser.add_argument('-s', '--status', action='store_true', help="Print pump status, does not update if set.")
 
 

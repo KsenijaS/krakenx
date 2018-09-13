@@ -84,12 +84,25 @@ Only use flag animation speed, if flag is not set it will have default value
 (0). Example:  
 `colctl --mode spectrumwave --animation_speed 3`
 
-Pump speed and fan speed are controled via `--pump_speed` and `--fan_speed` modes,
-but I could not verify that the flag works because I can't read fan and pump
-speed on my AMD B350 motherboard. If flags are not set, pump speed will have
-default value of 60% and fan speed 30%. 
+**Fan and pump speeds**
+
+Fan and pump speeds can be controled via the `--fan_speed` and `--pump_speed`
+options.  They are always set in duty percentages (multiplied by 100), and can
+either be fixed values (by passing a single integer number) or profiles
+depending on liquid temperatue (by passing multiple comma-separated
+`(<temperature>, <speed>)` tuples).
+
+```
+colctl --fan_speed 50 --pump_speed 60 [...]
+colctl --fan_speed "(20,30),(30,50),(40,90),(45,100)" [...]
+```
+
+If either flag is not set, a default profile will be applied in its place.
+
+---
 
 See also `colctl --help`
 
 Note: Solid and Solid All mode settings are not remembered after restart, I
 think that is due to the firmware bug.
+

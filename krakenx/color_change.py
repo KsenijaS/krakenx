@@ -3,9 +3,12 @@ from collections import namedtuple
 import sys
 import usb.core
 import itertools
+# import krakenx.profile
+from krakenx import profile
 
 VENDOR = 0x1e71
 PRODUCT = 0x170e
+CRITICAL_TEMP = 60
 
 class KrakenX52:
 
@@ -49,11 +52,9 @@ class KrakenX52:
     if self._aspeed < 0 or self._aspeed > 4 or not isinstance(self._aspeed, int):
       raise ValueError("Animation speed must be integer number between 0 and 4")
 
-    if self._fspeed < 25 or self._fspeed > 100 or not isinstance(self._fspeed, int):
-      raise ValueError("Fan speed must be integer number between 25 and 100")
+    self._fspeed = profile.parse(self._fspeed, 25, 100, CRITICAL_TEMP - 1)
 
-    if self._pspeed < 60 or self._pspeed > 100 or not isinstance(self._pspeed, int):
-      raise ValueError("Pump speed must be integer number between 60 and 100")
+    self._pspeed = profile.parse(self._pspeed, 60, 100, CRITICAL_TEMP - 1)
 
     self._check_color(self._text_color)
 
@@ -76,9 +77,9 @@ class KrakenX52:
 
     self._aspeed = kwargs.pop('aspeed', 0)
 
-    self._fspeed = kwargs.pop('fspeed', 30)
+    self._fspeed = kwargs.pop('fspeed')
 
-    self._pspeed = kwargs.pop('pspeed', 60)
+    self._pspeed = kwargs.pop('pspeed')
 
   def _mode_bytes(self, i=0):
     # set the higher 3 bits of the 2rd byte to denote the number of colors being set
@@ -87,11 +88,20 @@ class KrakenX52:
   def _mode_speed(self):
     return (self._mode.mode[0], self._aspeed)
 
+  def _generic_speed(self, channel, speed):
+    # krakens currently require the same set of temperatures on both channels
+    stdtemps = range(20, 62, 2)
+    tmp = profile.normalize(speed, CRITICAL_TEMP)
+    norm = [(t, profile.interpolate(tmp, t)) for t in stdtemps]
+    cbase = {'fan': 0x80, 'pump': 0xc0}[channel]
+    for i, (temp, duty) in enumerate(norm):
+      self.dev.write(0x01, KrakenX52._build_msg([0x02, 0x4d, cbase + i, temp, duty]))
+
   def _send_pump_speed(self):
-    self.dev.write(0x01, KrakenX52._build_msg([0x02, 0x4d, 0x40, 0x00, self._pspeed]))
+    self._generic_speed('pump', self._pspeed)
 
   def _send_fan_speed(self):
-    self.dev.write(0x01, KrakenX52._build_msg([0x02, 0x4d, 0x00, 0x00, self._fspeed]))
+    self._generic_speed('fan', self._fspeed)
 
   def _send_color(self):
     if self._mode==self.MODE_SOLID:
