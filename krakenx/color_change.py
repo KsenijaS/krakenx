@@ -26,6 +26,7 @@ class KrakenX52(KrakenTwoDriver):
   COLOR_MODES = [MODE_SOLID, MODE_SOLID_ALL, MODE_BREATHING, MODE_PULSE,
      MODE_FADING, MODE_COVERING_MARQUEE, MODE_SPECTRUM_WAVE,
                  MODE_POLICE, MODE_SPINNER, MODE_CHASER, MODE_MARQUEE]
+  COLOR_CHANNELS = {'Both': 'sync', 'Ring': 'ring', 'Text': 'logo'}
 
   @classmethod
   def _check_color(cls, color):
@@ -45,6 +46,8 @@ class KrakenX52(KrakenTwoDriver):
   def _validate(self):
     if self._mode not in self.COLOR_MODES:
       raise ValueError("color mode must be one of {}".format(self.COLOR_MODES))
+    if not self._color_channel in self.COLOR_CHANNELS:
+      raise ValueError("color channel must be one of {}".format(self.COLOR_CHANNELS.keys()))
     if self._aspeed < 0 or self._aspeed > 4 or not isinstance(self._aspeed, int):
       raise ValueError("Animation speed must be integer number between 0 and 4")
     self._fspeed = profile.parse(self._fspeed, 25, 100, CRITICAL_TEMP - 1)
@@ -56,6 +59,7 @@ class KrakenX52(KrakenTwoDriver):
   def __init__(self, dev, **kwargs):
     super(KrakenX52, self).__init__(dev, 'NZXT Kraken X42/X52/X62/X72')
     self._mode = kwargs.pop('mode', self.MODE_SOLID)
+    self._color_channel = kwargs.pop('color_channel')
     self._text_color = kwargs.pop('text_color', self.DEFAULT_COLOR)
     self._colors = []
     for i in range(8):
@@ -73,11 +77,12 @@ class KrakenX52(KrakenTwoDriver):
     self.set_speed_profile('fan', self._fspeed)
 
   def _send_color(self):
+    lchannel = self.COLOR_CHANNELS[self._color_channel]
     lcolors = self._colors[0:self._color_count]
     if self._mode == self.MODE_SOLID_ALL:
       lcolors.insert(0, self._text_color)
     lspeed = ['slowest', 'slower', 'normal', 'faster', 'fastest'][self._aspeed]
-    self.set_color('sync', self._mode.lname, lcolors, lspeed)
+    self.set_color(lchannel, self._mode.lname, lcolors, lspeed)
 
   def print_status(self):
     print("Device status:")

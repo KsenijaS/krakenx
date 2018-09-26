@@ -50,11 +50,24 @@ def _color_mode(arg):
                                       "Police, Spinner, Chaser")
 
 
+def _color_channel(arg):
+    norm = arg.lower().capitalize()
+    if norm in KrakenX52.COLOR_CHANNELS:
+        return norm
+    else:
+        raise argparse.ArgumentTypeError(
+                "color channel must be Both, Ring or Text [default: Both]")
+
+
 def main(parser):
     parser.add_argument('-m', '--mode', dest='mode',
                         type=_color_mode, default=KrakenX52.MODE_SOLID,
                         help="Color mode: Solid, SolidAll, Breathing, Pulse, "
                         "Fading, Marquee, CoveringMarquee, SpectrumWave, Police, Spinner, Chaser")
+
+    parser.add_argument('-ch', '--color_channel', dest='color_channel',
+                        type=_color_channel, default='Both',
+                        help="Color channel: Both, Ring or Text [default: Both]")
 
     parser.add_argument('-c', '--text_color', dest='text_color', type=_color,
                         default=(255, 0, 0), help="Color in r,g,b format")
