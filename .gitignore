@@ -1,0 +1,8 @@
+
+/.idea
+__pycache__
+*.autosave
+*.glade~
+/.mypy_cache/
+.dmypy.json
+/venv/
