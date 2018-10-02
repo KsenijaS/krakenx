@@ -104,6 +104,7 @@ def main(parser):
 
     for d in range(0, len(devices)):
       dev = devices[d]
+      dev.reset()
       if os.name != 'nt' and dev.is_kernel_driver_active(0):
         dev.detach_kernel_driver(0)
 
@@ -115,6 +116,8 @@ def main(parser):
         cooler.print_status()
       else:
         cooler.update()
+
+      usb.util.dispose_resources(dev)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
