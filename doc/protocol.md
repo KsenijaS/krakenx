@@ -1,4 +1,8 @@
-# Reverse engineered protocol of the NZXT Kraken X52
+# Reverse engineered protocol of the NZXT Kraken X52/X62/X72
+
+This documentation is not fully up-to-date. 
+Please have a look in the driver source code currently being integrated if you are interested in further details:
+[jonasmalacofilho/liquidctl/driver/kraken_two.py](https://github.com/jonasmalacofilho/liquidctl/blob/master/liquidctl/driver/kraken_two.py)
 
 ## Message
 

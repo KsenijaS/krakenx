@@ -7,6 +7,8 @@ Python script to control NZXT cooler Kraken X52/X62/X72 in Linux and Windows.
 
 Note: It's possible that other devices are supported as well
 
+See [protocol](doc/protocol.md) for details about USB communication.
+
 ## Python pip note:
 
 The public Python pip package installed with the pip install command might be outdated. You can check the [pip release history](https://pypi.org/project/krakenx/#history) and [Install from source](#install-from-source) if a newer version is required.
@@ -14,6 +16,9 @@ The public Python pip package installed with the pip install command might be ou
 ## Linux installation:
 
 `sudo python3 -m pip install krakenx`
+
+### Linux How-Tos:
+[Auto run the KrakenX colctl script on bootup.](doc/linux-autorun.md)
 
 ## Windows installation
 
