@@ -1,8 +1,4 @@
-### TL;DR
- (*)
-
-### Operating System
-This is for Linux only
+# How-To: Autorun KrakenX on Linux
 
 ### Purpose
 To execute KrakenX script inside a service daemon that gets launched during boot up.
@@ -141,6 +137,6 @@ systemctl show krakenx.service
 
 Hope this helps someone. Feel free to add to the project README.
 
-Note: This was edited several times to arrive at this solution. I do not recommend using cron or setting colctl in shell startup scripts. I had problems getting them to work. This is much cleaner, set and forget solution.
+Note by @kkobashi: This was edited several times to arrive at this solution. I do not recommend using cron or setting colctl in shell startup scripts. I had problems getting them to work. This is much cleaner, set and forget solution.
 
-**_(*) Use at your own risk. I will not be held responsible for anything that may go wrong. This was developed and tested on Ubuntu 18.0.4 desktop._**
+**_(*) Use at your own risk. We will not be held responsible for anything that may go wrong. This was developed and tested on Ubuntu 18.0.4 desktop._**
