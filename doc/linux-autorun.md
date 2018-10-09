@@ -13,23 +13,29 @@ What follows are instructions on how to get the latest KrakenX script, install a
 
 ### Get Python and PIP Assets, Setup and Install
 
+```console
 sudo apt install python3
 sudo apt-get install python3-usb
 sudo apt-get install python3-pip
+```
 
 ### Get KrakenX Assets, Setup and Install
 
+```console
 cd /etc
 mkdir colctl
 Download Kraken Zip file and copy to /etc/colctl
 unzip krakenx-master.zip
 cd krakenx-master
-python3 -m pip install krakenx (don't sudo or file error with owner cache permission appears)
+python3 -m pip install krakenx
+```
+(don't sudo or file error with owner cache permission appears)
 
 **Verify Your File Structure**
 
 Before you proceed, make sure your file structure looks similar to this:
 
+```
 /etc
 --/colctl
 ------colctl
@@ -37,6 +43,7 @@ Before you proceed, make sure your file structure looks similar to this:
 -----color_change.py
 -----__init__.py
 -----profile.py
+```
 
 These are the minimal folder and files you need to run KrakenX. They must be in this layout or the auto run service will not work.
 
@@ -58,6 +65,7 @@ The parameter settings below are set for (*):
 
 Adjust the above to your liking.
 
+```console
 cd /etc/systemd/service
 sudo nano krakenx.service
 
@@ -72,13 +80,16 @@ ExecStart=/etc/colctl/colctl --mode SpectrumWave --fan_speed "(20,25),(30,60),(4
 
 [Install]
 WantedBy=multi-user.target
+```
 
 ### Set Permissions and Ownership
 
+```console
 sudo chmod 644 krakenx.service (must be 644 or syslog will show errors)
 sudo chown root:root krakenx.service
 chmod 755 /etc/colctl/colctl
 chown root:root /etc/colctl/colctl
+```
 
 ### Using KrakenX Service
 
@@ -87,8 +98,10 @@ Ready? Set. Go!
 This first command starts the service and puts it in running state.
 The second command enables it so that on next boot, it will run automatically.
 
+```console
 sudo systemctl start krakenx.service
 sudo systemctl enable krakenx.service
+```
 
 You should now see your Kraken RGB, fans, and pump run at your specified settings.
 
@@ -99,33 +112,48 @@ These are things that you may need to use later to administrate the service. If 
 I leave them here for reference.
 
 **_To start the service_**
+```console
 systemctl start krakenx.service
 systemctl enable krakenx.service
-	
+```
+
 **_To stop the service_**
+```console
 systemctl stop krakenx.service
 systemctl disable krakenx.service
+```
 
 **_To restart the service_**
+```console
 systemctl restart kraken.service
-	
+```
+
 **_To reload the service_**
+```console
 systemctl reload krakenx.service
-	
+```
+
 **_To restart and reload the service_**
+```console
 systemctl reload-or-restart krakenx.service
-	
+```
+
 **_To remove the service_**
+```console
 systemctl stop krakenx.service
 systemctl disable krakenx.service
 rm /etc/systemd/system/krakenx.service
 rm /etc/systemd/system/krakenx.service (don't forget symlinks)
+```
 
 **_To update systemd_**
+```console
 systemctl daemon-reload
 systemctl reset-failed
-	
+```
+
 **_Status, targets and properties_**
+```console
 systemctl get-default or ls -al /lib/systemd/system/default.target
 ls -al /lib/systemd/system/runlevel*
 systemctl list-unit-files
@@ -134,9 +162,8 @@ systemctl is-enabled krakenx.service
 systemctl is-failed krakenx.service
 systemctl is-active krakenx.service
 systemctl show krakenx.service
-
-Hope this helps someone. Feel free to add to the project README.
+```
 
 Note by @kkobashi: This was edited several times to arrive at this solution. I do not recommend using cron or setting colctl in shell startup scripts. I had problems getting them to work. This is much cleaner, set and forget solution.
 
-**_(*) Use at your own risk. We will not be held responsible for anything that may go wrong. This was developed and tested on Ubuntu 18.0.4 desktop._**
+**(\*) Use at your own risk. We will not be held responsible for anything that may go wrong. This was developed and tested on Ubuntu 18.0.4 desktop.**
