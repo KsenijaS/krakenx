@@ -11,26 +11,26 @@ class KrakenX52(KrakenTwoDriver):
 
   DEFAULT_COLOR = (255, 0, 0)
 
-  Mode = namedtuple('Mode', ['name','lname'])
-  MODE_SOLID = Mode('Solid', 'fixed')
+  Mode = namedtuple('Mode', ['name', 'lname', 'uses_text_color'])
+  MODE_SOLID = Mode('Solid', 'fixed', False)
   COLOR_MODES = [
-    Mode('Off', 'off'),
+    Mode('Off', 'off', False),
     MODE_SOLID,
-    Mode('SolidAll', 'super-fixed'),
-    Mode('Fading', 'fading'),
-    Mode('SpectrumWave', 'spectrum-wave'),
-    Mode('CustomWave', 'super-wave'),
-    Mode('Marquee', 'marquee-3'),
-    Mode('CoveringMarquee', 'covering-marquee'),
-    Mode('Alternating', 'alternating'),
-    Mode('MovingAlternating', 'moving-alternating'),
-    Mode('Breathing', 'breathing'),
-    Mode('CustomBreathing', 'super-breathing'),
-    Mode('Pulse', 'pulse'),
-    Mode('Chaser', 'tai-chi'),
-    Mode('Spinner', 'water-cooler'),
-    Mode('Loading', 'loading'),
-    Mode('Police', 'wings'),
+    Mode('SolidAll', 'super-fixed', True),
+    Mode('Fading', 'fading', False),
+    Mode('SpectrumWave', 'spectrum-wave', False),
+    Mode('CustomWave', 'super-wave', True),
+    Mode('Marquee', 'marquee-3', False),
+    Mode('CoveringMarquee', 'covering-marquee', False),
+    Mode('Alternating', 'alternating', False),
+    Mode('MovingAlternating', 'moving-alternating', False),
+    Mode('Breathing', 'breathing', False),
+    Mode('CustomBreathing', 'super-breathing', True),
+    Mode('Pulse', 'pulse', False),
+    Mode('Chaser', 'tai-chi', False),
+    Mode('Spinner', 'water-cooler', False),
+    Mode('Loading', 'loading', False),
+    Mode('Police', 'wings', False),
   ]
   COLOR_CHANNELS = {'Both': 'sync', 'Ring': 'ring', 'Text': 'logo'}
 
@@ -85,7 +85,7 @@ class KrakenX52(KrakenTwoDriver):
   def _send_color(self):
     lchannel = self.COLOR_CHANNELS[self._color_channel]
     lcolors = self._colors[0:self._color_count]
-    if self._mode.lname.startswith('super-'):
+    if self._mode.uses_text_color:
       lcolors.insert(0, self._text_color)
     lspeed = ['slowest', 'slower', 'normal', 'faster', 'fastest'][self._aspeed]
     self.set_color(lchannel, self._mode.lname, lcolors, lspeed)
