@@ -1,169 +1,70 @@
-# How-To: Autorun KrakenX on Linux
+# How-To: automatic configuration on Linux boot
 
-### Purpose
-To execute KrakenX script inside a service daemon that gets launched during boot up.
+_How to automatically run krakenx and configure the cooler at boot_.
 
-This is very important so you don't have to remember to always run the script after you log in.
+This guide assumes your init system is systemd, since it is now ubiquitous on
+most Linux distributions.
 
-With CAM on Windows, everything kicks in when Windows boots up. On Linux however, NZXT provides no driver support or CAM. When Linux boots up, your Kraken AIO will default to a white RGB pump header color and the fans and pump will operate at default settings.
+## Create a system service that calls krakenx
 
-If you want more control than this. KrakenX lets you change this.
-
-What follows are instructions on how to get the latest KrakenX script, install all relevant code, configure your Kraken liquid cooler and administrate the auto run service.
-
-### Get Python and PIP Assets, Setup and Install
-
-```console
-sudo apt install python3
-sudo apt-get install python3-usb
-sudo apt-get install python3-pip
-```
-
-### Get KrakenX Assets, Setup and Install
-
-```console
-cd /etc
-mkdir colctl
-Download Kraken Zip file and copy to /etc/colctl
-unzip krakenx-master.zip
-cd krakenx-master
-python3 -m pip install krakenx
-```
-(don't sudo or file error with owner cache permission appears)
-
-**Verify Your File Structure**
-
-Before you proceed, make sure your file structure looks similar to this:
+Systemd _services_ are configured with _unit_ files.  A basic unit file looks
+like this:
 
 ```
-/etc
---/colctl
-------colctl
---/krakenx
------color_change.py
------__init__.py
------profile.py
-```
-
-These are the minimal folder and files you need to run KrakenX. They must be in this layout or the auto run service will not work.
-
-### Create a System Daemon Service For KrakenX
-This involves running a text editor (nano in this case) to type some stuff in. You will save the text file in /etc/systemd/service under the filename krakenx.service. 
-
-The parameter settings below are set for (*):
-- SpectrumWave RGB on the pump header
-- Fan speed (Celcius, not Fahrenheit):
-    Above 20C at 25% level
-    Above 30C at 60% level
-    Above 40C at 80% level
-    Above 50C at 100% level
-- Pump speed
-    Above 20C at 60% level
-    Above 30C at 70% level
-    Above 40C at 80% level
-    Above 50C at 100% level
-
-Adjust the above to your liking.
-
-```console
-cd /etc/systemd/service
-sudo nano krakenx.service
-
 [Unit]
-Description=Kraken AIO startup service
+Description=krakenx automatic configuration
 
 [Service]
-Type=oneshot
-User=root
-WorkingDirectory=/etc/colctl
-ExecStart=/etc/colctl/colctl --mode SpectrumWave --fan_speed "(20,25),(30,60),(40,80),(50,100)" --pump_speed "(20,60),(30,70),(40,80),(50,100)"
+Type=simple
+ExecStart=/usr/bin/env colctl --mode fading --color_count 2 --color0 192,32,64 --color1 64,11,21 --fan_speed "(30, 60), (45, 100)" --pump_speed "(30, 60), (40, 100)"
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 ```
 
-### Set Permissions and Ownership
+That should be enough for a system service that calls krakenx.  You can
+customize the `ExecStart` line with the `colctr` parameters you would like to
+use.
 
-```console
-sudo chmod 644 krakenx.service (must be 644 or syslog will show errors)
-sudo chown root:root krakenx.service
-chmod 755 /etc/colctl/colctl
-chown root:root /etc/colctl/colctl
+This unit file should be saved in a path that follows the pattern
+`/etc/systemd/system/<service name>.service`.  For simplicity, we will
+assume you have chosen to name your service `krakenx-config`.
+
+## Testing and enabling the service
+
+Before setting the newly created service to automatically start at every boot,
+you should try to start it manually and make sure that it works as intended.
+
+```
+# systemctl start krakenx-config
 ```
 
-### Using KrakenX Service
+After starting the service, use `systemctl`, `journalctl` and `colctl` itself to make sure it is working properly.
 
-Ready? Set. Go!
-
-This first command starts the service and puts it in running state.
-The second command enables it so that on next boot, it will run automatically.
-
-```console
-sudo systemctl start krakenx.service
-sudo systemctl enable krakenx.service
+```
+# systemctl status krakenx-config -n 99
+# journalctl -u krakenx-config
+# colctl -s
 ```
 
-You should now see your Kraken RGB, fans, and pump run at your specified settings.
+Once you are satisfied with the results, _enable_ the service to have it start automatically.
 
-### Other Things You May Need To Know
-
-These are things that you may need to use later to administrate the service. If you make changes to any of the parameter settings above, you need to stop the service, update systemd, and restart the service again.
-
-I leave them here for reference.
-
-**_To start the service_**
-```console
-systemctl start krakenx.service
-systemctl enable krakenx.service
+```
+# systemctl enable krakenx-config
 ```
 
-**_To stop the service_**
-```console
-systemctl stop krakenx.service
-systemctl disable krakenx.service
+## Uninstalling the service
+
+Before uninstalling the service, first _disable_ it.
+
+```
+# systemctl disable krakenx-config
 ```
 
-**_To restart the service_**
-```console
-systemctl restart kraken.service
+Then, simply remove its unit file and _reload_.
+
+```
+# rm /etc/systemd/system/krakenx-config.service
+# systemctl daemon-reload
 ```
 
-**_To reload the service_**
-```console
-systemctl reload krakenx.service
-```
-
-**_To restart and reload the service_**
-```console
-systemctl reload-or-restart krakenx.service
-```
-
-**_To remove the service_**
-```console
-systemctl stop krakenx.service
-systemctl disable krakenx.service
-rm /etc/systemd/system/krakenx.service
-rm /etc/systemd/system/krakenx.service (don't forget symlinks)
-```
-
-**_To update systemd_**
-```console
-systemctl daemon-reload
-systemctl reset-failed
-```
-
-**_Status, targets and properties_**
-```console
-systemctl get-default or ls -al /lib/systemd/system/default.target
-ls -al /lib/systemd/system/runlevel*
-systemctl list-unit-files
-systemctl list-units --type=target
-systemctl is-enabled krakenx.service
-systemctl is-failed krakenx.service
-systemctl is-active krakenx.service
-systemctl show krakenx.service
-```
-
-Note by @kkobashi: This was edited several times to arrive at this solution. I do not recommend using cron or setting colctl in shell startup scripts. I had problems getting them to work. This is much cleaner, set and forget solution.
-
-**(\*) Use at your own risk. We will not be held responsible for anything that may go wrong. This was developed and tested on Ubuntu 18.0.4 desktop.**
