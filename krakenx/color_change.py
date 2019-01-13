@@ -12,9 +12,10 @@ class KrakenX52(KrakenTwoDriver):
   DEFAULT_COLOR = (255, 0, 0)
 
   Mode = namedtuple('Mode', ['name','lname'])
+  MODE_SOLID = Mode('Solid', 'fixed')
   COLOR_MODES = [
     Mode('Off', 'off'),
-    Mode('Solid', 'fixed'),
+    MODE_SOLID,
     Mode('SolidAll', 'super-fixed'),
     Mode('Fading', 'fading'),
     Mode('SpectrumWave', 'spectrum-wave'),
@@ -63,7 +64,7 @@ class KrakenX52(KrakenTwoDriver):
 
   def __init__(self, dev, **kwargs):
     super(KrakenX52, self).__init__(dev, 'NZXT Kraken X42/X52/X62/X72')
-    self._mode = kwargs.pop('mode', self.COLOR_MODES[1])
+    self._mode = kwargs.pop('mode', self.MODE_SOLID)
     self._color_channel = kwargs.pop('color_channel')
     self._text_color = kwargs.pop('text_color', self.DEFAULT_COLOR)
     self._colors = []

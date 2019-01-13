@@ -41,7 +41,7 @@ def _color_channel(arg):
 
 def main(parser):
     parser.add_argument('-m', '--mode', dest='mode',
-                        type=_color_mode, default=KrakenX52.COLOR_MODES[1],
+                        type=_color_mode, default=KrakenX52.MODE_SOLID,
                         help="Color mode: " + ", ".join(mode.name for mode in KrakenX52.COLOR_MODES))
 
     parser.add_argument('-ch', '--color_channel', dest='color_channel',
