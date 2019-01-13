@@ -12,20 +12,25 @@ class KrakenX52(KrakenTwoDriver):
   DEFAULT_COLOR = (255, 0, 0)
 
   Mode = namedtuple('Mode', ['name','lname'])
-  MODE_SOLID = Mode('Solid', 'fixed')
-  MODE_SOLID_ALL = Mode('SolidAll', 'super-fixed')
-  MODE_FADING = Mode('Fading', 'fading')
-  MODE_SPECTRUM_WAVE = Mode('SpectrumWave', 'spectrum-wave')
-  MODE_MARQUEE = Mode('Marquee', 'marquee-3')
-  MODE_COVERING_MARQUEE = Mode('CoveringMarquee', 'covering-marquee')
-  MODE_POLICE = Mode('Police', 'wings')
-  MODE_BREATHING = Mode('Breathing', 'breathing')
-  MODE_PULSE = Mode('Pulse', 'pulse')
-  MODE_SPINNER = Mode('Spinner', 'water-cooler')
-  MODE_CHASER = Mode('Chaser', 'tai-chi')
-  COLOR_MODES = [MODE_SOLID, MODE_SOLID_ALL, MODE_BREATHING, MODE_PULSE,
-     MODE_FADING, MODE_COVERING_MARQUEE, MODE_SPECTRUM_WAVE,
-                 MODE_POLICE, MODE_SPINNER, MODE_CHASER, MODE_MARQUEE]
+  COLOR_MODES = [
+    Mode('Off', 'off'),
+    Mode('Solid', 'fixed'),
+    Mode('SolidAll', 'super-fixed'),
+    Mode('Fading', 'fading'),
+    Mode('SpectrumWave', 'spectrum-wave'),
+    Mode('CustomWave', 'super-wave'),
+    Mode('Marquee', 'marquee-3'),
+    Mode('CoveringMarquee', 'covering-marquee'),
+    Mode('Alternating', 'alternating'),
+    Mode('MovingAlternating', 'moving-alternating'),
+    Mode('Breathing', 'breathing'),
+    Mode('CustomBreathing', 'super-breathing'),
+    Mode('Pulse', 'pulse'),
+    Mode('Chaser', 'tai-chi'),
+    Mode('Spinner', 'water-cooler'),
+    Mode('Loading', 'loading'),
+    Mode('Police', 'wings'),
+  ]
   COLOR_CHANNELS = {'Both': 'sync', 'Ring': 'ring', 'Text': 'logo'}
 
   @classmethod
@@ -58,7 +63,7 @@ class KrakenX52(KrakenTwoDriver):
 
   def __init__(self, dev, **kwargs):
     super(KrakenX52, self).__init__(dev, 'NZXT Kraken X42/X52/X62/X72')
-    self._mode = kwargs.pop('mode', self.MODE_SOLID)
+    self._mode = kwargs.pop('mode', self.COLOR_MODES[1])
     self._color_channel = kwargs.pop('color_channel')
     self._text_color = kwargs.pop('text_color', self.DEFAULT_COLOR)
     self._colors = []
@@ -79,7 +84,7 @@ class KrakenX52(KrakenTwoDriver):
   def _send_color(self):
     lchannel = self.COLOR_CHANNELS[self._color_channel]
     lcolors = self._colors[0:self._color_count]
-    if self._mode == self.MODE_SOLID_ALL:
+    if self._mode.lname.startswith('super-'):
       lcolors.insert(0, self._text_color)
     lspeed = ['slowest', 'slower', 'normal', 'faster', 'fastest'][self._aspeed]
     self.set_color(lchannel, self._mode.lname, lcolors, lspeed)
