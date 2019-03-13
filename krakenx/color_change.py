@@ -57,7 +57,7 @@ class KrakenX52(KrakenTwoDriver):
     if self._aspeed < 0 or self._aspeed > 4 or not isinstance(self._aspeed, int):
       raise ValueError("Animation speed must be integer number between 0 and 4")
     self._fspeed = profile.parse(self._fspeed, 25, 100, CRITICAL_TEMP - 1)
-    self._pspeed = profile.parse(self._pspeed, 60, 100, CRITICAL_TEMP - 1)
+    self._pspeed = profile.parse(self._pspeed, 50, 100, CRITICAL_TEMP - 1)
     self._check_color(self._text_color)
     for j in range(self._color_count):
       self._check_color(self._colors[j])
