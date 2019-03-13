@@ -105,8 +105,6 @@ def main(parser):
       finally:
         cooler.disconnect()
 
-      usb.util.dispose_resources(dev)
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     main(parser)
