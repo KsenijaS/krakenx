@@ -62,8 +62,8 @@ class KrakenX52(KrakenTwoDriver):
     for j in range(self._color_count):
       self._check_color(self._colors[j])
 
-  def __init__(self, dev, **kwargs):
-    super(KrakenX52, self).__init__(dev, 'NZXT Kraken X42/X52/X62/X72')
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
     self._mode = kwargs.pop('mode', self.MODE_SOLID)
     self._color_channel = kwargs.pop('color_channel')
     self._text_color = kwargs.pop('text_color', self.DEFAULT_COLOR)
@@ -74,7 +74,6 @@ class KrakenX52(KrakenTwoDriver):
     self._aspeed = kwargs.pop('aspeed', 0)
     self._fspeed = kwargs.pop('fspeed')
     self._pspeed = kwargs.pop('pspeed')
-    self.dev = dev
 
   def _send_pump_speed(self):
     self.set_speed_profile('pump', self._pspeed)

@@ -91,11 +91,8 @@ def main(parser):
 
     args = parser.parse_args()
     varg = vars(args)
-    
-    devices = list(usb.core.find(idVendor=VENDOR, idProduct=PRODUCT, find_all=True))
 
-    for dev in devices:
-      cooler = KrakenX52(dev, **varg)
+    for cooler in KrakenX52.find_supported_devices(**varg):
       cooler.connect()
       try:
         if args.status:
