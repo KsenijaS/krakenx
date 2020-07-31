@@ -30,7 +30,7 @@ Krakenx can be installed using PIP (use Python 3, no administrative privileges r
 
 The `colctl` command might only work in a Unix shell like git bash. Use `colctl.py` in Windows command line environments instead which just redirects your command.
 
-If Zadig has been previously used to replace the Windows driver for the Kraken caller, follow the [instructions to restore the original driver](https://github.com/pbatard/libwdi/wiki/FAQ#Help_Zadig_replaced_the_driver_for_the_wrong_device_How_do_I_restore_it).
+If Zadig was previously used to replace the Windows driver for the Kraken cooler, follow the [instructions to restore the original driver](https://github.com/pbatard/libwdi/wiki/FAQ#Help_Zadig_replaced_the_driver_for_the_wrong_device_How_do_I_restore_it).
 
 ## Install from source
 
