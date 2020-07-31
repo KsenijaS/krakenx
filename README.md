@@ -32,6 +32,8 @@ The `colctl` command might only work in a Unix shell like git bash. Use `colctl.
 
 If Zadig was previously used to replace the Windows driver for the Kraken cooler, follow the [instructions to restore the original driver](https://github.com/pbatard/libwdi/wiki/FAQ#Help_Zadig_replaced_the_driver_for_the_wrong_device_How_do_I_restore_it).
 
+It is also necessary to install the Libusb DLLs, which can be found in the official [releases](https://github.com/libusb/libusb/releases).  For example, extract the MS64 DLLs from [libusb v1.0.21.7z](https://github.com/libusb/libusb/releases/download/v1.0.21/libusb-1.0.21.7z) to the system or active Python installation directory (e.g. `C:\Windows\System32` or `C:\Python36`).
+
 ## Install from source
 
 From cloned project source folder execute (use `sudo` on Linux, user account on Windows):  
