@@ -1,11 +1,11 @@
+# KrakenX Documentation
+Python script to control NZXT cooler Kraken X52/X62/X72 in Linux and Windows.
+
 ## State of this project:
 
 This project is working stable for all supported devices. One major contributor of this project created another more generic solution supporting loads of hardware devices, with a rich feature set, good documentation and active maintenance. Try it out:
 
 https://github.com/jonasmalacofilho/liquidctl
-
-# KrakenX Documentation
-Python script to control NZXT cooler Kraken X52/X62/X72 in Linux and Windows.
 
 ## Supported devices:
 
