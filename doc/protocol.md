@@ -2,7 +2,7 @@
 
 This documentation is not fully up-to-date. 
 Please have a look in the driver source code currently being integrated if you are interested in further details:
-[jonasmalacofilho/liquidctl/driver/kraken_two.py](https://github.com/jonasmalacofilho/liquidctl/blob/master/liquidctl/driver/kraken_two.py)
+[jonasmalacofilho/liquidctl/driver/kraken2.py](https://github.com/jonasmalacofilho/liquidctl/blob/master/liquidctl/driver/kraken2.py)
 
 ## Message
 
